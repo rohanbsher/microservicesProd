@@ -1,10 +1,14 @@
 import express from 'express'
+import 'express-async-errors';
 import { json } from 'body-parser'
+import mongoose from 'mongoose';
+
 import { currentUserRouter } from './routes/current-user'
 import { signinRouter } from './routes/signin'
 import { signoutRouter } from './routes/signout'
 import { signupRouter } from './routes/signup'
-
+import { errorHandler } from './middlewares/error-handler'
+import { NotFoundError } from './errors/not-found-error'
 
 const app = express()
 app.use(json())
@@ -13,7 +17,26 @@ app.use(signinRouter)
 app.use(signoutRouter)
 app.use(signupRouter)
 
-app.listen(3000, () => {
-	  console.log('Listening on port 3000!')
-});
+// async code can throw errors, so we need to use next() to pass the error to the error handler
+// but instead we can use the async express wrapper express-async-errors
+app.all('*', async (req, res) => {	
+	throw new NotFoundError()
+})
 
+app.use(errorHandler)
+
+const start = async () => {
+	try {
+		// refers to cluster IP service in mongo-depl file
+		await mongoose.connect('mongodb://auth-mongo-srv:27017/auth')
+		console.log('Connected to MongoDB');
+	} catch (err) {
+		console.error(err)
+	}
+
+	app.listen(3000, () => {
+		console.log('Listening on port 3000!');
+  });
+}
+
+start()
