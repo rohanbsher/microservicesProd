@@ -1,7 +1,7 @@
 
 export abstract class CustomError extends Error {
 	
-	abstract statusCode: number;
+	abstract readonly statusCode: number;
 
 	constructor(message: string) {
 		super(message);
