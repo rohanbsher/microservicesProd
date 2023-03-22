@@ -42,11 +42,12 @@ async (req: Request, res: Response) => {
 	}, process.env.JWT_KEY!);
 
 	// Store it on session object
+	// cookie session middleware sets a header to the response 
 	req.session = {
 		jwt: userJwt
 	}
 
-	res.status(200).send(user);
+	res.status(201).send(user);
 });
 
 export { router as signupRouter };
