@@ -2,12 +2,18 @@ import axios from 'axios'
 import { useState } from 'react'
 
 // Method must be post, get or patch 
-export default ({ url, method, body }) => {
+export default ({ url, method, body, onSuccess }) => {
 	const [errors, setErrors] = useState(null);
 
 	const doRequest = async () => {
 		try {
+			setErrors(null);
 			const response = await axios[method](url, body);
+			
+			if(onSuccess) {
+				onSuccess(response);
+			}
+			
 			return response.data
 
 		} catch (err) {

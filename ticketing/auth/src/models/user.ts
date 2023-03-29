@@ -13,7 +13,7 @@ interface UserModel extends mongoose.Model<UserDoc> {
 	build(attrs: UserAttrs): UserDoc;
 }
 
-// An interface that describes the properties that a User Document has
+// An interface that describes the properties that a single User Document has
 // This where the mongoose document is extended to add custom properties to User
 interface UserDoc extends mongoose.Document {
 	email: string;
@@ -50,12 +50,12 @@ userSchema.pre('save', async function (done) {
 	done();
 });
 
+// Create a a build function in userModel for typescript understanding
 userSchema.statics.build = (attrs: UserAttrs) => {
 	return new User(attrs);
 }
 
-// Using generic type to define the type of the model
-// generic types being provided to function as arguments
+// generic types being provided to model as arguments
 const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
 
 //using this function for effective type checking
