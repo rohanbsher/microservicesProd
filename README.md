@@ -6,8 +6,8 @@ Creating an application to sell/buy tickets.
 - Frontend : Next.js
 - Database: Mongo DB
 - Google Kubernetes Engine
-- Skaffold for deploymen to Kubernetes cluster
-- Docker, Kubernetes
+- Skaffold for deployment to Kubernetes cluster
+- Services : Docker, Kubernetes, Google Load balancer
 
 
 
