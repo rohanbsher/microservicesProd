@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import buildClient from '../api/build-client';
+import Header from '../components/header';
 
 // we have defined our own custom app component using _app file
 // A thin wrapper around the component that we are trying to show
@@ -8,7 +9,7 @@ import buildClient from '../api/build-client';
 const AppsComponent = ({ Component, pageProps, currentUser }) => {
 	return (
 		<div>
-			<h1>Header! {currentUser.email}</h1>
+			<Header currentUser={currentUser} />
 			<Component {...pageProps} />
 		</div>
 	);
@@ -20,12 +21,12 @@ AppsComponent.getInitialProps = async (appContext) => {
 	const client = buildClient(appContext.ctx);
 	const { data } = await client.get('/api/users/currentuser');
 	let pageProps = {};
-	if(appContext.Component.getInitialProps) {
+	if (appContext.Component.getInitialProps) {
 		pageProps = await appContext.Component.getInitialProps(appContext.ctx);
 	}
 
 	return {
-		pageProps, 
+		pageProps,
 		...data
 	}
 };
