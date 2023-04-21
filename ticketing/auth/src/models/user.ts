@@ -8,12 +8,14 @@ interface UserAttrs {
 }
 
 // An interface that describes the properties that a User Model has
+// which is the entire collection of the data
 // Wrapper for UserDoc
 interface UserModel extends mongoose.Model<UserDoc> {
 	build(attrs: UserAttrs): UserDoc;
 }
 
 // An interface that describes the properties that a single User Document has
+// Document represents one single record
 // This where the mongoose document is extended to add custom properties to User
 interface UserDoc extends mongoose.Document {
 	email: string;
@@ -34,6 +36,7 @@ const userSchema = new mongoose.Schema({
 }, {
 	toJSON: {
 		transform(doc, ret) {
+			// Json representations always represent id insteaf of _id
 			ret.id = ret._id;
 			delete ret._id;
 			delete ret.password;

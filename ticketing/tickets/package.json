@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@implementai/common": "^1.0.5",
+    "@implementai/common": "^1.0.6",
     "@types/cookie-session": "^2.0.44",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/mongoose": "^5.11.97",
